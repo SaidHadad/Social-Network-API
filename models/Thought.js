@@ -5,7 +5,7 @@ const dateFormat = require('../utils/dateFormat');
 var textValidator = [
   validate({
     validator: 'isLenght',
-    arguments: [3, 50],
+    arguments: [1, 280],
     message: "Text should be between 1 and 280 characters"
   })
 ];
@@ -20,7 +20,7 @@ const toughtSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: (createdAtVal) => dateFormat(createAtVal)
+      get: createdAtVal => dateFormat(createAtVal)
     },
     username: {
       type: String,
@@ -36,3 +36,35 @@ const toughtSchema = new Schema(
     id: false
   }
 );
+
+const reactionSchema = new Schema(
+  {
+    reactionId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId()
+    },
+    reactionBody: {
+      type: String,
+      required: true,
+      validate: textValidator
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: createdAtVal => dateFormat(createAtVal)
+    }
+  },
+  {
+    toJSON: {
+      getters: true
+    }
+  }
+);
+
+const Tought = model('Tought', toughtSchema);
+
+module.exports = Tought;
