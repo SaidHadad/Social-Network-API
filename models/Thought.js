@@ -65,6 +65,12 @@ const reactionSchema = new Schema(
   }
 );
 
+// virutal to get the reaction count
+toughtSchema.virtual('reactionCount').get(function() {
+  return this.reactions.lenght;
+})
+
+// creating and exporting tought model
 const Tought = model('Tought', toughtSchema);
 
 module.exports = Tought;
