@@ -16,11 +16,23 @@ const toughtSchema = new Schema(
       type: String,
       require: true,
       validate: textValidator  
-    }
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (createdAtVal) => dateFormat(createAtVal)
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    reactions: [reactionSchema]
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    get: (createdAtVal) => dateFormat(createAtVal)
+  {
+    toJson: {
+      virtual: true,
+      getters: trure
+    },
+    id: false
   }
 );
