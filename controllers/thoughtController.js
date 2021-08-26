@@ -19,7 +19,7 @@ const thoughtController = {
   },
   
   // getTought,
-  getTought(req, res) {
+  getThought(req, res) {
     Thought.find({})
     .sort({ _id: -1 })
     .then(thoughtData => res.json(thoughtData))
@@ -30,7 +30,7 @@ const thoughtController = {
   },
   
   // gettoughtId,
-  gettoughtId({ params }, res) {
+  getthoughtId({ params }, res) {
     Tought.findOne({ _id: params.id })
     .populate({
       path: 'reactions',
@@ -118,3 +118,5 @@ const thoughtController = {
     .catch(err => res.status(400).json(err));
   }
 };
+
+module.exports = thoughtController;

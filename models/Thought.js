@@ -1,41 +1,5 @@
-const { Schema, model } = require('mongoose');
-const validate = require('mongoose-validator');
+const { Schema, model, Types } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
-
-var textValidator = [
-  validate({
-    validator: 'isLenght',
-    arguments: [1, 280],
-    message: "Text should be between 1 and 280 characters"
-  })
-];
-
-const toughtSchema = new Schema(
-  {
-    thoughtText: {
-      type: String,
-      require: true,
-      validate: textValidator  
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: createdAtVal => dateFormat(createAtVal)
-    },
-    username: {
-      type: String,
-      required: true
-    },
-    reactions: [reactionSchema]
-  },
-  {
-    toJson: {
-      virtual: true,
-      getters: trure
-    },
-    id: false
-  }
-);
 
 const reactionSchema = new Schema(
   {
@@ -46,7 +10,8 @@ const reactionSchema = new Schema(
     reactionBody: {
       type: String,
       required: true,
-      validate: textValidator
+      maxlength: 280,
+      minlenght: 1
     },
     username: {
       type: String,
@@ -55,13 +20,41 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: createdAtVal => dateFormat(createAtVal)
+      get: createdAtVal => dateFormat(createdAtVal)
     }
   },
   {
     toJSON: {
       getters: true
     }
+  }
+);
+
+const toughtSchema = new Schema(
+  {
+    thoughtText: {
+      type: String,
+      require: true,
+      maxlength: 280,
+      minlenght: 1
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (createdAtVal) => dateFormat(createdAtVal)
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    reactions: [reactionSchema]
+  },
+  {
+    toJson: {
+      virtual: true,
+      getters: true
+    },
+    id: false
   }
 );
 

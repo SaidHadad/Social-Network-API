@@ -1,5 +1,4 @@
 const router = require('express').Router();
-
 // call the controller functions
 const {
   getallUsers,
