@@ -3,7 +3,7 @@ const router = require('express').Router();
 // call the controller functions
 const {
   getallUsers,
-  getuserbyID,
+  getuserbyId,
   createUser,
   updateUser,
   deleteUser,
@@ -20,7 +20,7 @@ router
 // /api/user/:id
 router
   .route('/:id')
-  .get(getuserbyID)
+  .get(getuserbyId)
   .put(updateUser)
   .delete(deleteUser);
 
