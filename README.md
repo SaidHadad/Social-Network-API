@@ -3,7 +3,7 @@
   
   <!-- DESCRIPTION -->
   <p align="center">
-  an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list.
+  An API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list.
 
   <!-- DEPLOYED LINK -->
   Video: https://drive.google.com/file/d/1kUIa8zMYOgujomH9Xhidn6pM7dsB3EZ0/view
