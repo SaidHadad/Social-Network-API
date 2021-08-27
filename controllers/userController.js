@@ -15,7 +15,7 @@ const userController = {
     })
     .select('___v')
     .sort({ _id: -1 })
-    .then(userData => res.json(userData))
+    .then(dbUserData => res.json(dbUserData))
     .catch(err => {
       console.log(err);
       res.status(400).json(err);
@@ -33,12 +33,12 @@ const userController = {
         path: 'friends',
         select: '-__v'
     })
-    .then(userData => {
-      if(!userData) {
+    .then(dbUserData => {
+      if(!dbUserData) {
         res.status(400).json({ message: 'No user found with this id!'});
         return;
       }
-      res.json(userData);
+      res.json(dbUserData);
     })
     .catch(err => {
       console.log(err);
@@ -49,19 +49,19 @@ const userController = {
   // createUser,
   createUser({ body }, res) {
     User.create(body)
-    .then(userData => res.json(userData))
+    .then(dbUserData => res.json(dbUserData))
     .catch(err => res.status(400).json(err));
   },
   
   // updateUser,
   updateUser({ params, body }, res) {
     User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidadots: true })
-    .then(userData => {
-      if (!userData) {
+    .then(dbUserData => {
+      if (!dbUserData) {
         res.status(404).json({ message: 'No user with this id was found' });
         return;
       }
-      res.json(userData);
+      res.json(dbUserData);
     })
     .catch(err => res.status(400).json(err)
     );
@@ -70,12 +70,12 @@ const userController = {
   // deleteUser,
   deleteUser({ params }, res) {
     User.findOneAndDelete({ _id: params.id })
-    .then(userData => {
-      if (!userData) {
+    .then(dbUserData => {
+      if (!dbUserData) {
         res.status(404).json({ message: 'No user found with this id!' });
         return;
       }
-      res.json(userData);
+      res.json(dbUserData);
     })
     .catch(err => res.status(400).json(err));
   },
@@ -88,12 +88,12 @@ const userController = {
       select: '-__v'
     })
     .select('-__v')
-    .then(userData => {
-      if (!userData) {
+    .then(dbUserData => {
+      if (!dbUserData) {
         res.status(404).json({ message: 'No user with this id was found' });
         return;
       }
-      res.json(userData);
+      res.json(dbUserData);
     })
     .catch(err => res.json(err));
   },
@@ -106,12 +106,12 @@ const userController = {
       select: '-__v'
     })
     .select('-__v')
-    .then(userData => {
-      if (!userData) {
+    .then(dbUserData => {
+      if (!dbUserData) {
         res.status(404).json({ message: 'No user with this id was found' });
         return;
       }
-      res.json(userData);
+      res.json(dbUserData);
     })
     .catch(err => res.status(400).json(err));
   }
