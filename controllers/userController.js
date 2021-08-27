@@ -3,24 +3,24 @@ const { User } = require('../models');
 const userController = {
 
   // get all users
-  getallUsers(req, res) {
+  getAllUsers(req, res) {
     User.find({})
-    .populate({
-      path: 'thoughts',
-      select: '-__v'
-    })
-    .populate({
+      .populate({
+        path: 'thoughts',
+        select: '-__v'
+      })
+      .populate({
         path: 'friends',
         select: '-__v'
-    })
-    .select('___v')
-    .sort({ _id: -1 })
-    .then(dbUserData => res.json(dbUserData))
-    .catch(err => {
-      console.log(err);
-      res.status(400).json(err);
-    })
-  },
+      })
+      .select('-__v')
+      .sort({ _id: -1 })
+      .then(dbUserData => res.json(dbUserData))
+      .catch(err => {
+        console.log(err);
+        res.status(400).json(err);
+      });
+},
   
   // getuserbyID
   getuserbyId({ params }, res) {
@@ -33,6 +33,7 @@ const userController = {
         path: 'friends',
         select: '-__v'
     })
+    .select('-__v')
     .then(dbUserData => {
       if(!dbUserData) {
         res.status(400).json({ message: 'No user found with this id!'});
@@ -49,9 +50,9 @@ const userController = {
   // createUser,
   createUser({ body }, res) {
     User.create(body)
-    .then(dbUserData => res.json(dbUserData))
-    .catch(err => res.status(400).json(err));
-  },
+      .then(dbUserData => res.json(dbUserData))
+      .catch(err => res.status(400).json(err));
+},
   
   // updateUser,
   updateUser({ params, body }, res) {
@@ -82,7 +83,11 @@ const userController = {
 
   // addFriend,
   addFriend({ params }, res) {
-    User.findOneAndUpdate({ _id: params.id },{ $push: { friends: params.friendId } },{ new: true, runValidators: true })
+    User.findOneAndUpdate(
+      { _id: params.id },
+      { $push: { friends: params.friendId } },
+      { new: true, runValidators: true }
+    )
     .populate({
       path: 'friends',
       select: '-__v'
@@ -96,7 +101,7 @@ const userController = {
       res.json(dbUserData);
     })
     .catch(err => res.json(err));
-  },
+}, 
   
   // deleteFriend
   deleteFriend({ params }, res) {

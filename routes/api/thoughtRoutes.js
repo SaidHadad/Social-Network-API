@@ -29,14 +29,14 @@ router
   .route('/:userId')
     .post(addThought);
 
-// /api/thoughts/:thoughtId/reactions
+// /api/thought/:thoughtId/reactions
 router
-  .route('/toughtId/reaction')
+  .route('/:thoughtId/reaction')
   .post(addReaction);
 
 // /api/thoughts/:thoughtId/reactionId
 router
-  .route('/toughtId/reaction/reactionId')
+  .route('/:thoughtId/reaction/:reactionId')
   .delete(removeReaction);
 
 module.exports = router;

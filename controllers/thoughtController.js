@@ -4,7 +4,7 @@ const thoughtController = {
   
   // addTought,
   addThought({ params, body }, res) {
-    Thought.create(bodyParser)
+    Thought.create(body)
     .then(({ _id }) => {
       return User.findOneAndUpdate({ _id: params.userId }, { $push: { thoughts: _id } }, { new: true, runValidators: true });
     })
@@ -31,18 +31,18 @@ const thoughtController = {
   
   // gettoughtId,
   getthoughtId({ params }, res) {
-    Tought.findOne({ _id: params.id })
+    Thought.findOne({ _id: params.id })
     .populate({
       path: 'reactions',
-      select: '-___v'
+      select: '-__v'
     })
-    .select('-___v')
+    .select('-__v')
     .then(dbThoughtData => {
       if (!dbThoughtData) {
         res.status(400).json({ message: 'No thought with this id!'});
         return
       }
-      res.json(thoughtData);
+      res.json(dbThoughtData);
     })
     .catch(err => {res.status(400).json(err)});
   },
